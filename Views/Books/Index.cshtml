@@ -1,0 +1,10 @@
+﻿@model List<DockerComposeSample.Models.Book>
+
+<a class="btn btn-success" asp-action="Create" asp-controller="Books">Create New Book</a>
+
+<ul>
+    @foreach (var book in Model)
+    {
+        <li asp-route-id="@book.Id.ToString()">@book.Name</li>
+    }
+</ul>

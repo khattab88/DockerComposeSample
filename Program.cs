@@ -1,4 +1,5 @@
 using DockerComposeSample.Data;
+using DockerComposeSample.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,7 @@ var user = builder.Configuration["Database:User"] ?? "";
 var password = builder.Configuration["Database:Password"] ?? "";
 var database = builder.Configuration["Database:Name"] ?? "";
 
-var connectionString = $"Server={server},{port}; UserId={user}; Password={password}; InitialCatalog={database};";
+var connectionString = $"Server={server},{port}; User Id={user}; Password={password}; Initial Catalog={database};";
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
 {
@@ -21,7 +22,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddControllersWithViews();
 
+
 var app = builder.Build();
+
+// Apply database migrations
+DatabaseManagementService.ApplyMigrations(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
