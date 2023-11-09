@@ -3,17 +3,17 @@ using DockerComposeSample.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.UseUrls("http://*:8080");
+builder.WebHost.UseUrls("http://*:80");
 
 // Add services to the container.
 
-var server = builder.Configuration["Database:Server"] ?? "";
-var port = builder.Configuration["Database:Port"] ?? "";
-var user = builder.Configuration["Database:User"] ?? "";
-var password = builder.Configuration["Database:Password"] ?? "";
-var database = builder.Configuration["Database:Name"] ?? "";
+var server = builder.Configuration["DatabaseServer"] ?? "";
+var port = builder.Configuration["DatabasePort"] ?? "";
+var user = builder.Configuration["DatabaseUser"] ?? "";
+var password = builder.Configuration["DatabasePassword"] ?? "";
+var database = builder.Configuration["DatabaseName"] ?? "";
 
-var connectionString = $"Server={server},{port}; User Id={user}; Password={password}; Initial Catalog={database};";
+var connectionString = $"Server={server}, {port}; User Id={user}; Password={password}; Initial Catalog={database}; TrustServerCertificate=true;";
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
 {
